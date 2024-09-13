@@ -1,0 +1,90 @@
+.container-fluid
+    .row
+        .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+            %h1.text-center
+                Select News Article Item
+
+        .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+            %h3.text-center
+                = link_to @representative.name, representative_path(@representative), class: 'text-primary ml-2'
+
+        .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+            %h3.text-center
+                Issue: #{@issue}
+
+    .row
+        .col-md-8.offset-md-2
+            = form_tag representative_save_article_path(issue: @issue), method: :post do
+                .radio
+                    %label
+                        %input{ name: 'article', type: 'radio',
+                        value: ApplicationHelper.build_article_obj(@articles, 0) }
+                        Title: #{@articles[0].title}
+                        %br
+                        Description: #{@articles[0].description}
+                        %br
+                        URL:
+                        = link_to @articles[0].url, article_url_path(link: @articles[0].url),
+                        target: :_blank, rel: 'noopener'
+                        %br
+                .radio
+                    %label
+                        %input{ name: 'article', type: 'radio',
+                        value: ApplicationHelper.build_article_obj(@articles, 1) }
+                        Title: #{@articles[1].title}
+                        %br
+                        Description: #{@articles[1].description}
+                        %br
+                        URL:
+                        = link_to @articles[1].url, article_url_path(link: @articles[1].url),
+                        target: :_blank, rel: 'noopener'
+                        %br
+                .radio
+                    %label
+                        %input{ name: 'article', type: 'radio',
+                        value: ApplicationHelper.build_article_obj(@articles, 2) }
+                        Title: #{@articles[2].title}
+                        %br
+                        Description: #{@articles[2].description}
+                        %br
+                        URL:
+                        = link_to @articles[2].url, article_url_path(link: @articles[2].url),
+                        target: :_blank, rel: 'noopener'
+                        %br
+                .radio
+                    %label
+                        %input{ name: 'article', type: 'radio',
+                        value: ApplicationHelper.build_article_obj(@articles, 3) }
+                        Title: #{@articles[3].title}
+                        %br
+                        Description: #{@articles[3].description}
+                        %br
+                        URL:
+                        = link_to @articles[3].url, article_url_path(link: @articles[3].url),
+                        target: :_blank, rel: 'noopener'
+                        %br
+                .radio
+                    %label
+                        %input{ name: 'article', type: 'radio',
+                        value: ApplicationHelper.build_article_obj(@articles, 4) }
+                        Title: #{@articles[4].title}
+                        %br
+                        Description: #{@articles[4].description}
+                        %br
+                        URL:
+                        = link_to @articles[4].url, article_url_path(link: @articles[4].url),
+                        target: :_blank, rel: 'noopener'
+                %br
+                Rating
+                %br
+                %select.rating-select{ name: 'rating' }
+                    %option{ value: '' }
+                    - (1..5).each do |r|
+                        %option{ value: r }= r
+                %br
+                .actions
+                    %button{ type: 'submit', class: 'btn btn-primary' } Save
+            %br
+            %a{ href: '#', class: 'mx-1 btn btn-info' }
+                View all news articles
+                %i.fas.fa-arrow-right

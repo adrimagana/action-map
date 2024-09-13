@@ -1,0 +1,51 @@
+%h1 Search News Article Item
+
+= form_for @news_item, url: representative_select_article_path(@representative), html: { method: :get } do |f|
+    .form-group.row
+        .col-sm-2
+            = label_tag :representative_id, 'Representative:', class: 'col-form-label'
+        .col-sm-10
+            = select_tag :representative_id, options_from_collection_for_select(@representatives,
+                :id, :name, params[:representative_id]), include_blank: true, class: 'form-control'
+    .form-group.row
+        .col-sm-2
+            = label_tag :issue, 'Issue:', class: 'col-form-label'
+        .col-sm-10
+            = select_tag :issue, options_for_select(@issues_list, params[:issue]),
+            include_blank: true, class: 'form-control'
+    .actions
+        = f.submit 'Search', class: 'btn btn-primary'
+
+:javascript
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('JavaScript is loaded and DOM is ready');
+        const selectElement = document.getElementById('representative_id');
+        const form = document.getElementById('new_news_item');
+
+        if (selectElement && form) {
+            selectElement.addEventListener('change', function() {
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                console.log('Selection changed:', selectedOption.text, selectElement.value);
+                const representativeId = selectedOption.value;
+
+                const originalAction = form.action;
+                const newAction = originalAction.replace(/\/representatives\/\d+\/representatives\/\d+\//,
+                                `/representatives/${representativeId}/representatives/${representativeId}/`);
+                console.log(`Form action updated to: ${newAction}`);
+            });
+
+            form.addEventListener('submit', function(event) {
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                const representativeId = selectedOption.value;
+                const originalAction = form.action;
+                const newAction = originalAction.replace(/\/representatives\/\d+\/representatives\/\d+\//,
+                                `/representatives/${representativeId}/representatives/${representativeId}/`);
+
+                form.action = newAction;
+
+                console.log(`Button action on submit: ${newAction}`);
+            });
+        } else {
+            console.log('Representative select element not found');
+        }
+    });
